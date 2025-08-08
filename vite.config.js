@@ -16,11 +16,11 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      "@pages": path.resolve(__dirname, "./src/pages"),
-      "@schema": path.resolve(__dirname, "./src/schema"),
-      "@types": path.resolve(__dirname, "./src/types"),
-      "@hooks": path.resolve(__dirname, "./src/hooks"),
-      "@assets": path.resolve(__dirname, "./src/assets"),
+      // "@pages": path.resolve(__dirname, "./src/pages"),
+      // "@schema": path.resolve(__dirname, "./src/schema"),
+      // "@types": path.resolve(__dirname, "./src/types"),
+      // "@hooks": path.resolve(__dirname, "./src/hooks"),
+      // "@assets": path.resolve(__dirname, "./src/assets"),
     },
   },
 });

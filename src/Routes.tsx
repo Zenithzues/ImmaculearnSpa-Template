@@ -1,12 +1,13 @@
 import React from "react";
 import { Routes as ReactRoutes, Route } from "react-router";
 
-import App from "@pages/Home/homePage.jsx";
+import LandingPage from "@/pages/Landing/landingPage.jsx";
+// import LandingPage from '@/pages';
 
 export default function Routes() {
   return (
     <ReactRoutes>
-      <Route path="/" element={<App />} />
+      <Route path="/" element={<LandingPage />} />
     </ReactRoutes>
   );
 }
