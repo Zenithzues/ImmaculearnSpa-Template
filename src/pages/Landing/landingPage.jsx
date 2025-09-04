@@ -52,6 +52,17 @@ const LandingPage = () => {
             a seamless, engaging, and collaborative platform.
           </p>
         </div>
+
+        {/* Right Image */} 
+        <div className="mt-10 md:mt-0 relative z-10"> 
+          <img src="./src/assets/heroes.png" alt="Students Learning" className="w-[450px] max-w-full" /> 
+        </div> 
+        <div className="absolute right-0 z-0"> 
+          <img src="./src/assets/Blob.png" alt="" className="w-[500px] max-w-full" /> 
+        </div> 
+        <div className="absolute right-0 z-0"> 
+          <img src="./src/assets/Vector.png" alt="" /> 
+          </div>
       </main>
 
       {/* Popups */}
