@@ -1,5 +1,6 @@
 import React from "react";
-import Sidebar from "../component/sidebar";
+// import Sidebar from "../component/sidebar";
+import Sidebar from "../../components/sidebar";
 
 const ChatList = () => {
 
