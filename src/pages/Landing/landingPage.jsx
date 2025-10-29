@@ -35,7 +35,7 @@ const LandingPage = () => {
           <a href="#contact" className="text-black hover:text-blue-800">Contact Us</a>
         </nav>
 
-        <a href="#login" className="relative z-10 text-white font-medium hover:underline">
+        <a href="" className="relative z-10 text-white font-medium hover:underline">
           Log In
         </a>
       </header>
