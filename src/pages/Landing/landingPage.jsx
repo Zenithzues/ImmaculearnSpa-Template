@@ -4,21 +4,26 @@ import ChatList from "../User_chats/user_chats"; // import Sidebar/MainPage
 import LandingPage2 from "./landingPage2";
 import TopFeatures from "./topFeatures";
 import { encryptData, decryptData } from "../../hooks/useLocalStorage";
+// import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+// import pkg from 'react-router-dom';
+// const {Link} = pkg;
 
 const LandingPage = () => {
   const [showMainPage, setShowMainPage] = useState(false);
+  // const navigate = useNavigate;
 
   // app = useLocalStorage("sample", {"name": "wilson"}, "secrets")
   
   // encryptData({"sample":"hello world"}, "secrets")
 
-  const run = async () => {
-    const encrypted = await encryptData({ hello: "world" });
-    const decrypted = await decryptData(encrypted);
-    console.log({ encrypted, decrypted });
-  };
+  // const run = async () => {
+  //   const encrypted = await encryptData({ hello: "world" });
+  //   const decrypted = await decryptData(encrypted);
+  //   console.log({ encrypted, decrypted });
+  // };
 
-  run();
+  // run();
 
   return (
     <div className="max-w-full font-sans bg-gradient-to-r from-white to-[#fef6ff] min-h-screen relative overflow-hidden">
@@ -35,9 +40,9 @@ const LandingPage = () => {
           <a href="#contact" className="text-black hover:text-blue-800">Contact Us</a>
         </nav>
 
-        <a href="" className="relative z-10 text-white font-medium hover:underline">
+        <Link to="/login" className="relative z-10 text-white font-medium hover:underline">
           Log In
-        </a>
+        </Link>
       </header>
 
       {/* Main Section */}

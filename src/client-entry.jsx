@@ -1,18 +1,19 @@
 /* eslint no-restricted-globals: ["error", "event"] */
 /* global document */
 
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from "react-router";
+import React from "react";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import "./index.css";
+import Routes from "./Routes.tsx";
 
-import Routes from './Routes.tsx';
-
-import './index.css';
-
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter
+      future={{ v7_relativeSplatPath: true, v7_startTransition: true }}
+    >
       <Routes />
     </BrowserRouter>
-  </StrictMode>,
-)
+  </StrictMode>
+);
