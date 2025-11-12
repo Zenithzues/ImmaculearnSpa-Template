@@ -2,19 +2,19 @@ import { useEffect, useState } from 'react'
 import reactLogo from '../../assets/react.svg'
 import viteLogo from '/vite.svg'
 import './homePage.css'
-import useSocket from '../../hooks/useSocket'
+// import useSocket from '../../hooks/useSocket'
 
 function HomePage() {
   const [count, setCount] = useState(0)
-  const { isConnected, socket } = useSocket();
+  // const { isConnected, socket } = useSocket();
 
-  useEffect(() => {
-    if (!isConnected) return;
+  // useEffect(() => {
+  //   if (!isConnected) return;
 
-    socket.on('welcome', (data) => {
-      console.log('[ws] welcome', data);
-    });
-  }, [isConnected, socket]);
+  //   socket.on('welcome', (data) => {
+  //     console.log('[ws] welcome', data);
+  //   });
+  // }, [isConnected, socket]);
 
   return (
     <>

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import useSocket from "@/hooks/useSocket.js";
 import ChatList from "../User_chats/user_chats";
 
 const TopFeatures = () => {

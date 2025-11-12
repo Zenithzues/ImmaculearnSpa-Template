@@ -20,8 +20,8 @@
 import React from "react";
 import { Routes as ReactRoutes, Route } from "react-router-dom";
 import LandingPage from "./pages/Landing/landingPage.jsx";
-import Layout from "./Layouts/Default";
-import ChatList from "./pages/User_chats/user_chats";
+import Layout from "./Layouts/Default.jsx";
+import ChatList from "./pages/User_chats/user_chats.jsx";
 import LoginPage from "./pages/SignIn/signInPage.jsx"; // Import the LoginPage component
 // import Home from "./pages/home/HomePage";
 // import Search from "./pages/search/search";
@@ -41,9 +41,6 @@ export default function Routes() {
           <Route path="login" element={<LoginPage />} />
           {/* <Route path="print-document" element={<Sample />} /> */}
         </Route>
-
-        {/* Route without layout */}
-        {/* <Route path="/login" element={<Login />} /> */}
         </ReactRoutes>
       // </SearchProvider>
     // </ToastProvider>
