@@ -10,23 +10,21 @@ import { Link } from "react-router-dom";
 
 import { io } from "socket.io-client";
 
-const socket = io('http://localhost:3000', {
-  transports: ['websocket', 'polling']
-});
+
 
 const LandingPage = () => {
   const [showMainPage, setShowMainPage] = useState(false);
-  socket.on('connect', () => {
-    console.log('connected to server', socket.id)
-    socket.emit("user:join", (socket.id))
-  })
-  socket.on("user:login", ({userId, email}) => {
-    console.log(`Login: ${userId}, ${email}`)
-  })
+  // socket.on('connect', () => {
+  //   console.log('connected to server', socket.id)
+  //   socket.emit("user:join", (socket.id))
+  // })
+  // socket.on("user:login", ({userId, email}) => {
+  //   console.log(`Login: ${userId}, ${email}`)
+  // })
 
-  socket.on("onlineUser:update", (users) => {
-    console.log("Currently online:", users);
-  });
+  // socket.on("onlineUser:update", (users) => {
+  //   console.log("Currently online:", users);
+  // });
 
 
   // const navigate = useNavigate;
