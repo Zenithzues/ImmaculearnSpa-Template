@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Home,
   Users,
@@ -16,10 +16,10 @@ import { Link, useLocation } from "react-router";
 
 import Logout from "./logout";
 import logo from "../../assets/HomePage/logo.png";
-import frierenAvatar from "../../assets/HomePage/frieren-avatar.jpg";
+import profAvatar from "../../assets/HomePage/jober.jpg";
 import { useUser } from "../../contexts/user/useUser.ts";
 
-const Sidebar = () => {
+const ProfSidebar = () => {
   const { user } = useUser();
   const [showLogout, setShowLogout] = useState(false);
   const [hoveredItem, setHoveredItem] = useState(null);
@@ -27,38 +27,39 @@ const Sidebar = () => {
   const location = useLocation();
 
   const menuItems = [
-    { icon: <Home size={20} />, label: "Home", path: "/home" },
-    { icon: <Users size={20} />, label: "Spaces", path: "/space" },
+    { icon: <Home size={20} />, label: "Home", path: "/prof-home" },
+    { icon: <Users size={20} />, label: "Spaces", path: "/prof-main-space" },
     {
       icon: <Bell size={20} />,
       label: "Notifications",
-      path: "/notifications",
+      path: "/prof-notifications",
     },
-    { icon: <Calendar size={20} />, label: "Tasks", path: "/task" },
-    { icon: <Folder size={20} />, label: "Files", path: "/files" },
+    {
+      icon: <Calendar size={20} />,
+      label: "List of Activities",
+      path: "/prof-list-activity",
+    },
+    { icon: <Folder size={20} />, label: "Files", path: "/prof-files" },
   ];
 
   const privateItems = [
     {
       icon: <Calendar size={20} />,
       label: "Calendar",
-      path: "/calendar",
+      path: "/prof-calendar",
     },
     {
       icon: <ClipboardList size={20} />,
       label: "Grade Viewing",
-      path: "/grade-viewing",
+      path: "/prof-grade-viewing",
     },
-    { icon: <MessageCircle size={20} />, label: "Chats", path: "/chatlist" },
+    { icon: <MessageCircle size={20} />, label: "Chats", path: "/prof-chats" },
   ];
 
   const accountItems = [
-    { icon: <User size={20} />, label: "Account", path: "/accsettings" },
-    { icon: <Settings size={20} />, label: "Settings", path: "/settings" },
+    { icon: <User size={20} />, label: "Account", path: "/prof-acc-settings" },
+    { icon: <Settings size={20} />, label: "Settings", path: "/prof-settings" },
   ];
-
-  // ✅ BACKEND-READY STUDENT NAME (temporary fallback)
-  const displayName = user?.name || "Raecell Ann Galvez";
 
   return (
     <div
@@ -83,6 +84,7 @@ const Sidebar = () => {
           <span>ImmacuLearn</span>
         </h1>
 
+        {/* Main Menu */}
         <nav className="w-full space-y-1 mb-5">
           {menuItems.map((item) => (
             <SidebarItem
@@ -90,17 +92,19 @@ const Sidebar = () => {
               icon={item.icon}
               label={item.label}
               path={item.path}
-              active={location.pathname === item.path} // ← FIX
+              active={location.pathname === item.path}
               isHovered={hoveredItem === item.label}
               onHover={() => setHoveredItem(item.label)}
             />
           ))}
         </nav>
 
+        {/* Private Section */}
         <div className="w-full border-t border-blue-300/40 pt-3 mb-5">
           <p className="text-[11px] uppercase text-gray-100 tracking-wide mb-2 font-semibold">
             Private
           </p>
+
           {privateItems.map((item) => (
             <SidebarItem
               key={item.label}
@@ -114,6 +118,7 @@ const Sidebar = () => {
           ))}
         </div>
 
+        {/* Account Section */}
         <div className="w-full border-t border-blue-300/40 pt-3 space-y-1">
           {accountItems.map((item) => (
             <SidebarItem
@@ -137,21 +142,18 @@ const Sidebar = () => {
         </div>
       </div>
 
+      {/* Profile Account */}
       <div className="p-4 border-t border-blue-300/40 flex items-center space-x-3 flex-shrink-0">
         <img
-          src={user ? user.profile_pic : frierenAvatar}
+          src={user?.profile_pic || profAvatar}
           alt="Profile"
           className="w-9 h-9 rounded-full object-cover border border-white/20"
         />
-        <span className="text-sm font-semibold">{displayName}</span>
+        <span className="text-sm font-semibold">Jober Reyes</span>
       </div>
 
-      {showLogout && (
-        <Logout
-          onClose={() => setShowLogout(false)}
-          onLogOut={() => setShowLogout(true)}
-        />
-      )}
+      {/* Logout Modal */}
+      {showLogout && <Logout onClose={() => setShowLogout(false)} />}
     </div>
   );
 };
@@ -194,4 +196,4 @@ const SidebarItem = ({
   );
 };
 
-export default Sidebar;
+export default ProfSidebar;
