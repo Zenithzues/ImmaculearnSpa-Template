@@ -1,40 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import InputField from "@/pages/component/InputField";
+import Button from "@/pages/component/Button";
+import { Mail } from "lucide-react";
+import { useNavigate, useSearchParams } from "react-router";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
-  const [isHovered, setIsHovered] = useState(false);
-  const [isActive, setIsActive] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [role, setRole] = useState(""); // ✅ track selected role
+  const [error, setError] = useState("")
 
-  const baseButtonStyle = {
-    color: "#fff",
-    cursor: "pointer",
-    border: "1px solid #000",
-    borderRadius: "4px",
-    padding: "0.6em 1.8em", // reduced height
-    background: "#000",
-    transition: "all 0.2s ease-in-out",
-    width: "30%",
-    fontWeight: "600",
-    fontSize: "0.9rem",
-  };
-
-  const getButtonStyle = () => {
-    let style = { ...baseButtonStyle };
-
-    if (isHovered) {
-      style.color = "#fff";
-      style.background = "#0066D2";
-      style.transform = "translate(-0.25rem, -0.25rem)";
-      style.boxShadow = "0.25rem 0.25rem #000";
-    }
-
-    if (isActive) {
-      style.transform = "translate(0)";
-      style.boxShadow = "none";
-    }
-
-    return style;
-  };
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -44,6 +21,52 @@ const LoginPage = () => {
     }
     alert(`Logging in as ${role}`);
   };
+
+  const handleGmailLogin = async() => {
+    // if (!role) {
+    //   alert("Please select whether you are a Student or a Professor.");
+    //   return;
+    // }
+
+    window.open(
+      `http://localhost:3000/v1/account/oauth/google/redirect`,
+      "_blank",
+      `width=500,height=600,top=${(screen.height-600)/2},left=${(screen.width-500)/2},resizable=yes,scrollbars=yes`
+    );
+  };
+
+  useEffect(() => {
+    const handleMessage = (event) => {
+      if (event.origin !== "http://localhost:5173") return;
+      if (!event.data.success) {
+        setError(event.data.error)
+      }
+      if (event.data.success) {
+        if (event.data.needsOnboarding) {
+          navigate(`/onboarding?role=${event.data.role}`)
+        } else {
+          if (role === "student") {
+            navigate(`/home?role=${event.data.role}`); // or onboarding
+          } else {
+            navigate(`/prof-home?role=${event.data.role}`); // or onboarding
+          }
+        }
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
+
+  useEffect(() => {
+    if (!error) return;
+
+    if (error === "not_registered") {
+      toast.error("Google account is not register!");
+    } else if (error === "oauth_failed") {
+      toast.error("Google login failed. Please try again.");
+    }
+  }, [error]); // run only when `error` changes
 
   return (
     <div
@@ -64,7 +87,7 @@ const LoginPage = () => {
 
       {/* Center Content */}
       <div className="text-center mb-8">
-        <h2 className="text-xl md:text-2xl font-semibold text-gray-700">
+        <h2 className="text-xl md:text-2xl font-semibold text-gray-700 mt-8">
           Log in with{" "}
           <span className="text-green-600 font-bold">ImmacuLearn</span> Today!
         </h2>
@@ -82,80 +105,111 @@ const LoginPage = () => {
         </div>
 
         {/* Form */}
-        <form
-          className="flex flex-col gap-4 items-center"
-          onSubmit={handleSubmit}
-        >
-          <input
+        <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit}>
+          <InputField
             type="email"
             placeholder="Enter your email address"
-            style={{
-              maxWidth: "100%",
-              padding: "0.875rem",
-              fontSize: "1rem",
-              border: "1.5px solid #000",
-              borderRadius: "0.5rem",
-              boxShadow: "2.5px 3px 0 #000",
-              outline: "none",
-              transition: "box-shadow ease 0.25s",
-              width: "100%",
-              backgroundColor: "white",
-            }}
-            onFocus={(e) => (e.target.style.boxShadow = "5.5px 7px 0 black")}
-            onBlur={(e) => (e.target.style.boxShadow = "2.5px 3px 0 #000")}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            style={{ width: "100%" }}
           />
 
-          <input
+          <InputField
             type="password"
             placeholder="Enter your password"
-            style={{
-              maxWidth: "100%",
-              padding: "0.875rem",
-              fontSize: "1rem",
-              border: "1.5px solid #000",
-              borderRadius: "0.5rem",
-              boxShadow: "2.5px 3px 0 #000",
-              outline: "none",
-              transition: "box-shadow ease 0.25s",
-              width: "100%",
-              backgroundColor: "white",
-            }}
-            onFocus={(e) => (e.target.style.boxShadow = "5.5px 7px 0 black")}
-            onBlur={(e) => (e.target.style.boxShadow = "2.5px 3px 0 #000")}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={{ width: "100%" }}
           />
 
           {/* ✅ Checkbox Section */}
           <div className="flex justify-center gap-6 mt-2 w-full">
             <label className="flex items-center gap-2 text-gray-800 font-medium">
               <input
-                type="checkbox"
+                type="radio"
+                name="role"
+                value="Student"
                 checked={role === "Student"}
-                onChange={() => setRole("Student")}
+                onChange={(e) => setRole(e.target.value)}
               />
               Student
             </label>
+
             <label className="flex items-center gap-2 text-gray-800 font-medium">
               <input
-                type="checkbox"
+                type="radio"
+                name="role"
+                value="Professor"
                 checked={role === "Professor"}
-                onChange={() => setRole("Professor")}
+                onChange={(e) => setRole(e.target.value)}
               />
               Professor
             </label>
           </div>
 
+
           {/* Log in Button */}
-          <button
+          <Button
             type="submit"
-            style={getButtonStyle()}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            onMouseDown={() => setIsActive(true)}
-            onMouseUp={() => setIsActive(false)}
+            style={{
+              width: "50%",
+              background: "#0066D2",
+              padding: "10px",
+              fontSize: "16px",
+              fontWeight: "600",
+              borderRadius: "8px",
+              marginTop: "8px",
+              margin: "0 auto",
+            }}
+            onClick={handleSubmit}
           >
             Log in
-          </button>
+          </Button>
         </form>
+
+        {/* Divider */}
+        <div className="flex items-center gap-3 my-6">
+          <div className="flex-1 border-t border-gray-300"></div>
+          <span className="text-gray-500 text-sm">Or</span>
+          <div className="flex-1 border-t border-gray-300"></div>
+        </div>
+
+        {/* Gmail Login Button */}
+        <button
+          onClick={handleGmailLogin}
+          style={{
+            width: "80%",
+            padding: "12px 24px",
+            fontSize: "16px",
+            fontWeight: "600",
+            borderRadius: "8px",
+            border: "2px solid #e5e7eb",
+            backgroundColor: "#ffffff",
+            color: "#374151",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "12px",
+            cursor: "pointer",
+            transition: "all 0.2s",
+            margin: "0 auto",
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.backgroundColor = "#f3f4f6";
+            e.currentTarget.style.borderColor = "#d1d5db";
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.backgroundColor = "#ffffff";
+            e.currentTarget.style.borderColor = "#e5e7eb";
+          }}
+        >
+          <Mail
+            size={20}
+            className="text-red-500"
+            style={{ color: "#ef4444" }}
+          />
+          Continue with Gmail
+        </button>
 
         <p className="text-center text-gray-600 text-sm mt-4">
           Check your email inbox for log in credentials.
