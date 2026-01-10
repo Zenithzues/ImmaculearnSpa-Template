@@ -32,10 +32,10 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
       throw new Error("No profile");
     } catch (error: any) {
-      const status = error?.response?.success;
+      const status = error?.status || 500;
 
       // Try refresh if unauthorized
-      if (!status) {
+      if (status === 401) {
         try {
           const refreshRes = await api.post("/auth/refresh");
 

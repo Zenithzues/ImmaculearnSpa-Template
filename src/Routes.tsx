@@ -9,8 +9,11 @@ import InitialInvitePage from "./pages/SpaceCreation/inviteteam.jsx";
 
 import ChatList from "./pages/User_chats/user_chats";
 import LoginPage from "./pages/SignIn/signInPage.jsx";
+import HomePage from "./pages/HomePage/homepage.jsx";
+
 
 import { SignInPageWithOAuth } from "./pages/test-page/signInPageWithOAuth.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 export default function Routes() {
   return (
@@ -21,6 +24,12 @@ export default function Routes() {
       <Route path="/" element={<LandingPage />} />
       <Route path="/chatlist" element={<ChatList />} />
       <Route path="/login" element={<LoginPage />} /> 
+
+      <Route path="/home" element={
+          <ProtectedRoute>
+            <HomePage />
+          </ProtectedRoute>
+      } />
 
       <Route path="/initial-create-space" element={<SpaceCreationPage />} />
       <Route path="/initial-invite" element={<InitialInvitePage />} />
