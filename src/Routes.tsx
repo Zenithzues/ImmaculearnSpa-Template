@@ -9,7 +9,7 @@ import InitialInvitePage from "./pages/SpaceCreation/inviteteam.jsx";
 
 import ChatList from "./pages/User_chats/user_chats";
 import LoginPage from "./pages/SignIn/signInPage.jsx";
-import HomePage from "./pages/HomePage/homepage.jsx";
+import HomePage from "./pages/HomePage/homePage.jsx";
 
 
 import { SignInPageWithOAuth } from "./pages/test-page/signInPageWithOAuth.jsx";
